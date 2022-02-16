@@ -1,4 +1,5 @@
 body{
+    background-color: #E5E5E5;
     font-family: 'Roboto', sans-serif;
 }
 /* cabeçalho */
@@ -92,6 +93,67 @@ main{
     width: 308px;
     background: #434CA0;
     padding: 20px;
+}
+
+
+ /* -------- Tela Criação --------*/
+
+/* Tela 1*/
+
+#screen-1{
+    width: 100%;
+    height: calc(100vh - 70px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#screen-1 h2{
+    font-weight: bold;
+    font-size: 23px;
+    line-height: 27px;
+
+    margin: 27px;
+}
+#screen-1 ul{
+    width: auto;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+#screen-1 .button{
+    background-color: #EC362D;
+    color: white;
+    width: 368px;
+    height: 54px;
+    border-radius: 15px;
+
+    margin: 85px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#screen-create input{
+    width: 564px;
+    height: 46px;
+
+    background: #FFFFFF;
+    border: 1px solid #D1D1D1;
+    box-sizing: border-box;
+    border-radius: 5px;
+
+    margin: 9px;
 }
 
 .hidden {
