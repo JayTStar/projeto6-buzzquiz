@@ -12,81 +12,80 @@
     </head>
     <body>
         <header>BuzzQuizz</header>
-        <main>
-            <div id="screen-home" class="hidden">
-                <section class="my-quizzes">
+        
+        <div id="screen-home" class="hidden">
+            <section class="my-quizzes">
+                <div class="quizz"></div>
+                <ul>
+
+                </ul>
+            </section>
+            <section class="all-quizzes">
+                <h2>Todos os Quizzes</h2>
+                <ul>
                     <div class="quizz"></div>
+                    <div class="quizz"></div>
+                    <div class="quizz"></div>
+                </ul>
+            </section>
+        </div>
+        <div id="screen-quizz">
+            <div class="title-quizz">
+                <img src="img/Rectangle34.png" alt="">
+                <h2>O quão Potterhead é você?</h2>
+            </div>
+            <section class="questions">
+                <article>
+                    <h3>Em qual animal Olho-Tonto Moody transfigurou Malfoy?</h3>
+                    <img src="" alt="">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                </article>
+            </section>
+        </div>
+        <div id="screen-create" class="">
+
+            <div id="screen-1" class="">
+                <section>
+                    <h2>Comece pelo começo</h2>
                     <ul>
-    
+                        <input type="text" id="titulo">
+                        <input type="text" id="imagem">
+                        <input type="text" id="qtd-perguntas">
+                        <input type="text" id="qtd-niveis">
                     </ul>
                 </section>
-                <section class="all-quizzes">
-                    <h2>Todos os Quizzes</h2>
+                    <div class="button">Prosseguir pra criar perguntas</div>
+            </div>
+
+            <div id="screen-2" class="hidden">
+                <section>
                     <ul>
-                        <div class="quizz"></div>
-                        <div class="quizz"></div>
-                        <div class="quizz"></div>
+                        <input type="text">
+                        <input type="text">
+                    </ul>
+                    <ul>
+                        <input type="text">
+                        <input type="text">
+                    </ul>
+                    <ul>
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
+                        <input type="text">
                     </ul>
                 </section>
             </div>
-            <div id="screen-quizz">
-                <div class="title-quizz">
-                    <img src="img/Rectangle34.png" alt="">
-                    <h2>O quão Potterhead é você?</h2>
-                </div>
-                <section class="questions">
-                    <article>
-                        <h3>Em qual animal Olho-Tonto Moody transfigurou Malfoy?</h3>
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <img src="" alt="">
-                    </article>
-                </section>
+            <div id="screen-3">
+
             </div>
-            <div id="screen-create" class="">
+            <div id="screen-4">
 
-                <div id="screen-1" class="">
-                    <section>
-                        <h2>Comece pelo começo</h2>
-                        <ul>
-                            <input type="text" id="titulo">
-                            <input type="text" id="imagem">
-                            <input type="text" id="qtd-perguntas">
-                            <input type="text" id="qtd-niveis">
-                        </ul>
-                        <div class="button">Prosseguir pra criar perguntas</div>
-                    </section>
-                </div>
-
-                <div id="screen-2" class="hidden">
-                    <section>
-                        <ul>
-                            <input type="text">
-                            <input type="text">
-                        </ul>
-                        <ul>
-                            <input type="text">
-                            <input type="text">
-                        </ul>
-                        <ul>
-                            <input type="text">
-                            <input type="text">
-                            <input type="text">
-                            <input type="text">
-                            <input type="text">
-                            <input type="text">
-                        </ul>
-                    </section>
-                </div>
-                <div id="screen-3">
-
-                </div>
-                <div id="screen-4">
-
-                </div>
             </div>
-        </main>
+        </div>
         <script src="./JS/script.js"></script>
     </body>
 </html>
