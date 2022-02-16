@@ -113,6 +113,11 @@ main{
 
 /* -------- Tela Criação --------*/
 
+#screen-create main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 #screen-create input{
     width: 564px;
     height: 46px;
@@ -146,6 +151,22 @@ main{
 
     padding: 20px;
 }
+
+#screen-create .button{
+    background-color: #EC362D;
+    color: white;
+    width: 368px;
+    height: 54px;
+    border-radius: 15px;
+
+    margin: 85px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 /* Tela 1*/
 
 #screen-1{
@@ -158,20 +179,6 @@ main{
     line-height: 27px;
 
     margin: 27px;
-}
-
-#screen-1 .button{
-    background-color: #EC362D;
-    color: white;
-    width: 368px;
-    height: 54px;
-    border-radius: 15px;
-
-    margin: 85px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 /* Tela 2 */
