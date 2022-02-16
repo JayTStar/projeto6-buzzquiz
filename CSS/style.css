@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body{
     font-family: 'Roboto', sans-serif;
 }
@@ -26,11 +30,8 @@ header{
 
 main{
     margin-top: 69px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
+
 /* TELA 1 */
 .my-quizzes{
     display: flex;
@@ -54,6 +55,7 @@ main{
     align-items: center;
     justify-content: space-between;
 }
+
 .quizz{
     background-color: green;
     width: 340px;
@@ -71,11 +73,10 @@ main{
 #screen-quizz img {
     width: 100%;
     height: 142px;
-    
 }
 
 #screen-quizz h2 {
-    width: 80%;
+    width: 340px;
     height: 54px;
     font-size: 19px;
     color: white;
@@ -84,14 +85,28 @@ main{
     line-height: 54px;
 }
 #screen-quizz article {
-    width: 90%;
-    height: 300px;
+    width: 375px;
+    height: 436px;
+    padding: 18px;
     background-color: black;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
+
 #screen-quizz article h3 {
     width: 308px;
     background: #434CA0;
     padding: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 13px;
+}
+
+#screen-quizz article img {
+    width: 163px;
+    height: 113px;
 }
 
 .hidden {
