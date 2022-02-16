@@ -1,3 +1,7 @@
+// -------- Variáveis Globais --------
+
+let quizzes = [];
+
 
 function changeScreen(screen){
     console.log(screen);
@@ -19,6 +23,31 @@ function changeScreen(screen){
         case "create":
             create.classList.remove("hidden");
     }
+}
+
+function getInfo(){
+    const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
+    promisse.then(function (resposta){
+        deuCerto(resposta);
+        salvaQuizzes(resposta);
+    });
+    promisse.catch(function (){
+        deuErro();
+    })
+}
+function postInfo(){
+
+}
+
+function deuCerto(resposta){
+    console.log("tudo certo");
+}
+function deuErro(erro){
+    console.info("deu ruim" + erro.response.status);
+}
+
+function salvaQuizzes(resposta){
+    quizzes = resposta.data;
 }
 
 // -------- MOSTRAR QUIZZES --------

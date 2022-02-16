@@ -14,20 +14,22 @@
         <header>BuzzQuizz</header>
 
         <div id="screen-home" class="">
-            <section class="my-quizzes">
-                <div onclick="changeScreen('create')" class="quizz"></div>
-                <ul>
+            <main>
+                <section class="my-quizzes">
+                    <div id="no-quizzes" onclick="changeScreen('create')" class="quizz"></div>
+                    <ul id="user-quizes">
 
-                </ul>
-            </section>
-            <section class="all-quizzes">
-                <h2>Todos os Quizzes</h2>
-                <ul>
-                    <div class="quizz"></div>
-                    <div class="quizz"></div>
-                    <div class="quizz"></div>
-                </ul>
-            </section>
+                    </ul>
+                </section>
+                <section class="all-quizzes">
+                    <h2>Todos os Quizzes</h2>
+                    <ul>
+                        <div class="quizz"></div>
+                        <div class="quizz"></div>
+                        <div class="quizz"></div>
+                    </ul>
+                </section>
+            </main>
         </div>
         <div id="screen-quizz" class="hidden">
             <div class="title-quizz">
@@ -113,6 +115,8 @@
 
             </div>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="./JS/script.js"></script>
     </body>
 </html>
