@@ -1,5 +1,6 @@
 // -------- Variáveis Globais --------
-
+const QUIZZES = "";
+let QUIZZ ;
 let quizzes = [];
 
 // function changeScreen(screen){
@@ -13,6 +14,8 @@ let quizzes = [];
 //     }
 //     telas[screen].classList.remove("hidden");
 // }
+
+getInfo(QUIZZES);
 
 function changeScreen(screen){
     console.log(screen);
@@ -39,12 +42,17 @@ function changeScreen(screen){
     }
 }
 
-function getInfo(){
-    const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
-    promisse.then(function (resposta){
-        deuCerto(resposta);
-        salvaQuizzes(resposta);
-    });
+function getInfo(location){
+    const promisse = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${location}`);
+
+    if(location == QUIZZES){
+        promisse.then(function (resposta){
+            deuCerto(resposta);
+            salvaQuizzes(resposta);
+            displayOnScreen();
+        });
+    }
+    
     promisse.catch(function (erro){
         deuErro(erro);
     })
