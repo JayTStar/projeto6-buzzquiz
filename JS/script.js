@@ -2,6 +2,17 @@
 
 let quizzes = [];
 
+// function changeScreen(screen){
+//     const telas = {
+//       home: document.querySelector("#screen-home"),
+//       quizz: document.querySelector("#screen-quizz"),
+//       create: document.querySelector("#screen-create")
+//     };
+//     for(let tela in telas) {
+//         telas[tela].classList.add("hidden");
+//     }
+//     telas[screen].classList.remove("hidden");
+// }
 
 function changeScreen(screen){
     console.log(screen);
@@ -58,8 +69,9 @@ function display(element){
     const quizzesList = document.querySelector(".all-quizzes ul");
     const titulo = element.title
     const imagem = element.image
+    const id = element.id
 
-    quizzesList.innerHTML = quizzesList.innerHTML + `<div onclick="changeScreen('quizz')" class="quizz"> <img src="${imagem}" alt="qizz image"> <p>${titulo}</p> </div>`
+    quizzesList.innerHTML = quizzesList.innerHTML + `<div id="${id}" onclick="changeScreen('quizz')" class="quizz"> <img src="${imagem}" alt="qizz image"> <p>${titulo}</p> </div>`
     
 }
 
