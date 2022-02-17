@@ -1,6 +1,7 @@
 // -------- Variáveis Globais --------
-
-let quizzes = [];
+const QUIZZES = "";
+let ID ;
+let quizzes = [], quizz = [];
 
 // function changeScreen(screen){
 //     const telas = {
@@ -13,6 +14,8 @@ let quizzes = [];
 //     }
 //     telas[screen].classList.remove("hidden");
 // }
+
+getInfo(QUIZZES);
 
 function changeScreen(screen){
     console.log(screen);
@@ -39,12 +42,24 @@ function changeScreen(screen){
     }
 }
 
-function getInfo(){
-    const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
-    promisse.then(function (resposta){
-        deuCerto(resposta);
-        salvaQuizzes(resposta);
-    });
+function getInfo(location){
+    const promisse = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${location}`);
+
+    if(location == QUIZZES){
+        promisse.then(function (resposta){
+            deuCerto(resposta);
+            salvaQuizzes(resposta);
+            displayOnScreen();
+        });
+    }
+    if(location == ID){
+        promisse.then(function (resposta){
+            deuCerto(resposta);
+            salvaQuizz(resposta);
+            displayOnScreen();
+        });
+    }
+    
     promisse.catch(function (erro){
         deuErro(erro);
     })
@@ -63,6 +78,10 @@ function salvaQuizzes(resposta){
     quizzes = resposta.data;
 }
 
+function salvaQuizz(resposta){
+    quizz = resposta.data;
+}
+
 // -------- MOSTRAR QUIZZES --------
 
 function display(element){
@@ -71,7 +90,7 @@ function display(element){
     const imagem = element.image
     const id = element.id
 
-    quizzesList.innerHTML = quizzesList.innerHTML + `<div id="${id}" onclick="changeScreen('quizz')" class="quizz"> <img src="${imagem}" alt="qizz image"> <p>${titulo}</p> </div>`
+    quizzesList.innerHTML = quizzesList.innerHTML + `<div id="${id}" onclick="goToQuizz(this)" class="quizz"> <img src="${imagem}" alt="qizz image"> <p>${titulo}</p> </div>`
     
 }
 
@@ -84,6 +103,14 @@ function displayOnScreen(){
 
 //-------- LÓGICA DO QUIZZ ---------
 
+
+function goToQuizz(elemento){
+    const id = elemento.id;
+    ID = id;
+
+    getInfo(ID);
+    changeScreen("quizz");
+}
 
 //-------- CRIAÇÃO DO QUIZZ --------
 
