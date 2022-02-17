@@ -31,14 +31,13 @@ function getInfo(){
         deuCerto(resposta);
         salvaQuizzes(resposta);
     });
-    promisse.catch(function (){
-        deuErro();
+    promisse.catch(function (erro){
+        deuErro(erro);
     })
 }
-function postInfo(){
-
+function postInfo(erro){
+    
 }
-
 function deuCerto(resposta){
     console.log("tudo certo");
 }
@@ -51,6 +50,22 @@ function salvaQuizzes(resposta){
 }
 
 // -------- MOSTRAR QUIZZES --------
+
+function displayOnScreen(element){
+    const quizzesList = document.querySelector(".all-quizzes ul");
+    const titulo = element.title
+    const imagem = element.image
+
+    quizzesList.innerHTML = quizzesList.innerHTML + `<div class="quizz"> <img src="${imagem}" alt="qizz image"> <p>${titulo}</p> </div>`
+    
+}
+
+function display(){
+    getInfo();
+    quizzes.forEach(element => {
+        displayOnScreen(element);
+    });
+}
 
 //-------- LÓGICA DO QUIZZ --------
 
