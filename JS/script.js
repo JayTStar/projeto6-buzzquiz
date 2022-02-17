@@ -109,7 +109,6 @@ function goToQuizz(elemento){
 
     getInfo(ID);
     changeScreen("quizz");
-
 }
 
 //-------- CRIAÇÃO DO QUIZZ --------
