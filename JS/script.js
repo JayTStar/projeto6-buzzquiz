@@ -16,12 +16,15 @@ function changeScreen(screen){
     switch(screen){
         case "home":
             home.classList.remove("hidden");
+            break;
         
         case "quizz":
             quizz.classList.remove("hidden");
+            break;
 
         case "create":
             create.classList.remove("hidden");
+            break;
     }
 }
 
@@ -35,7 +38,7 @@ function getInfo(){
         deuErro(erro);
     })
 }
-function postInfo(erro){
+function postInfo(){
     
 }
 function deuCerto(resposta){
@@ -51,19 +54,19 @@ function salvaQuizzes(resposta){
 
 // -------- MOSTRAR QUIZZES --------
 
-function displayOnScreen(element){
+function display(element){
     const quizzesList = document.querySelector(".all-quizzes ul");
     const titulo = element.title
     const imagem = element.image
 
-    quizzesList.innerHTML = quizzesList.innerHTML + `<div class="quizz"> <img src="${imagem}" alt="qizz image"> <p>${titulo}</p> </div>`
+    quizzesList.innerHTML = quizzesList.innerHTML + `<div onclick="changeScreen('quizz')" class="quizz"> <img src="${imagem}" alt="qizz image"> <p>${titulo}</p> </div>`
     
 }
 
-function display(){
+function displayOnScreen(){
     getInfo();
     quizzes.forEach(element => {
-        displayOnScreen(element);
+        display(element);
     });
 }
 
