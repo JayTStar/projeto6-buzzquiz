@@ -82,7 +82,8 @@ function displayOnScreen(){
     });
 }
 
-//-------- LÓGICA DO QUIZZ --------
+//-------- LÓGICA DO QUIZZ ---------
+
 
 //-------- CRIAÇÃO DO QUIZZ --------
 
