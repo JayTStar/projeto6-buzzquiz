@@ -182,6 +182,10 @@ main{
     border: 15px;
 }
 
+.opacity {
+    opacity: 0.3;
+}
+
 
 /* -------- Tela Criação --------*/
 
