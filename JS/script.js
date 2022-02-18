@@ -113,3 +113,81 @@ function goToQuizz(elemento){
 
 //-------- CRIAÇÃO DO QUIZZ --------
 
+let  title,imgURL,questionNum, levelNum;
+
+function getValue(screen){
+    switch(screen){
+        case "screen-1":
+            title = document.querySelector("#screen-1 #titulo").value;
+            imgURL = document.querySelector("#screen-1 #imagem").value;
+            questionNum = parseInt(document.querySelector("#screen-1 #qtd-perguntas").value);
+            levelNum = parseInt(document.querySelector("#screen-1 #qtd-niveis").value);
+            break;
+
+        case "screen-2":
+
+        case "screen-3":
+
+    }
+    
+}
+
+function checkValue(){
+    getValue();
+
+    const titleSize = title.length;
+    let titleStatus, questionStatus, levelSatus;
+
+    if(titleSize >= 20 && titleSize <= 65){
+        titleStatus = true;
+    }
+    else{
+        if(titleSize < 20){
+            alert("Titulo pequeno");
+
+            titleStatus = false;
+        }
+        if(titleSize > 65){
+            alert("Titulo muito grande");
+
+            titleStatus = false;
+        }
+    }
+    
+    if(isNaN(questionNum)){
+        alert("Quantidade de perguntas deve ser um número");
+
+        questionStatus = false;
+    }
+    else{
+        if(questionNum < 3){
+            alert("Poucas Perguntas");
+
+            questionStatus = false;
+        }
+        else{
+            questionStatus = true;
+        }
+    }
+    
+    if(isNaN(levelNum)){
+        alert("Quantidade de niveis deve ser um número");
+
+        levelSatus = false;
+    }
+    else{
+        if(levelNum < 2){
+            alert("Poucos niveis");
+
+            levelSatus = false;
+        }
+        else{
+            levelSatus = true;
+        }
+    }
+
+    if(titleStatus === true && questionStatus === true && levelSatus === true){
+        console.log("tudo ok")
+    }
+}
+
