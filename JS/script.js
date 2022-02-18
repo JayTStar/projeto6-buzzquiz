@@ -118,7 +118,7 @@ function goToQuizz(takeId){
 
 //-------- CRIAÇÃO DO QUIZZ --------
 
-let  title,imgURL,questionNum, levelNum;
+let  title,imgURL,questionNum, levelNum, screen = 1;
 
 function getValue(screen){
     switch(screen){
@@ -193,6 +193,16 @@ function checkValue(){
 
     if(titleStatus === true && questionStatus === true && levelSatus === true){
         console.log("tudo ok")
+        nextScreen();
     }
 }
 
+function nextScreen(){
+    const screens = document.querySelector(`#screen-create #screen-${screen}`);
+
+    screens.classList.add("hidden");
+
+    screen ++ 
+
+    screens.classList.remove("hidden");
+}
