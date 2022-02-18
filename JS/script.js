@@ -115,38 +115,34 @@ function goToQuizz(takeId){
 function sendQuizzHTML (resposta) {
     quizz = resposta.data
     console.log(quizz)
-    let main = document.querySelector("#screen-quizz main")
+
+    let main = document.querySelector("#screen-quizz main .title-quizz")
     main.innerHTML += `
-    <div class="title-quizz">
         <img src="${quizz.image}" alt="">
-        <h2>${quizz.title}</h2>
-    </div>
-    <section class="questions">
-        <article>
-            <h3>Em qual animal Olho-Tonto Moody transfigurou Malfoy?</h3>
-            <div class="answers-options">
-                <div>
-                    <img class="" src="img/Rectangle38.png" alt="">
-                    <p>The boy who lived</p>
+        <h2>${quizz.title}</h2>`
+
+    const questions = quizz.questions
+    for (let i = 0; i < questions.length; i++) {
+        let screenQuestions = document.querySelector("#screen-quizz main .questions");
+        screenQuestions.innerHTML +=`
+            <article class="box ${i}">
+                <h3 style="background: ${questions[i].color};">${questions[i].title}</h3>
+                <div class="answers-options ${i}">
                 </div>
-                <div>
-                    <img src="img/Rectangle38.png" alt="">
-                    <p>The boy who lived</p>
-                </div>
-                <div>
-                    <img src="img/Rectangle38.png" alt="">
-                    <p>The boy who lived</p>
-                </div>
-                <div>
-                    <img src="img/Rectangle38.png" alt="">
-                    <p>The boy who lived</p>
-                </div>
-            </div>
-        </article>
-    </section>`
+            </article>`
+    }
+
+    // const answers = quizz.questions
+    // for (let j = 0; j < answers.length; j++) {
+    //     let screenAnswers = document.querySelector(`#screen-quizz main .${j} .${j}`);
+    //     screenAnswers.innerHTML +=`
+    //             <div>
+    //                 <img src="${answers[j].answers.image}" alt="">
+    //                 <p>${answers[j].answers.title}</p>
+    //             </div>`
+    // }
+
 }
-
-
 
 //-------- CRIAÇÃO DO QUIZZ --------
 
