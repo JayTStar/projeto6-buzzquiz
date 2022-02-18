@@ -52,11 +52,12 @@ function getInfo(location){
             displayOnScreen();
         });
     }
-    if(location == ID){
+    else if(location == ID){
         promisse.then(function (resposta){
             deuCerto(resposta);
             salvaQuizz(resposta);
             // displayOnScreen();
+            sendQuizzHTML(resposta);
         });
     }
     
@@ -95,7 +96,7 @@ function display(element){
 }
 
 function displayOnScreen(){
-    getInfo();
+    
     quizzes.forEach(element => {
         display(element);
     });
@@ -109,11 +110,42 @@ function goToQuizz(takeId){
     getInfo(ID);
     
     changeScreen("quizz");
-    console.log (quizz);
-
-
-    
 }
+
+function sendQuizzHTML (resposta) {
+    quizz = resposta.data
+    console.log(quizz)
+    let main = document.querySelector("#screen-quizz main")
+    main.innerHTML += `
+    <div class="title-quizz">
+        <img src="${quizz.image}" alt="">
+        <h2>${quizz.title}</h2>
+    </div>
+    <section class="questions">
+        <article>
+            <h3>Em qual animal Olho-Tonto Moody transfigurou Malfoy?</h3>
+            <div class="answers-options">
+                <div>
+                    <img class="" src="img/Rectangle38.png" alt="">
+                    <p>The boy who lived</p>
+                </div>
+                <div>
+                    <img src="img/Rectangle38.png" alt="">
+                    <p>The boy who lived</p>
+                </div>
+                <div>
+                    <img src="img/Rectangle38.png" alt="">
+                    <p>The boy who lived</p>
+                </div>
+                <div>
+                    <img src="img/Rectangle38.png" alt="">
+                    <p>The boy who lived</p>
+                </div>
+            </div>
+        </article>
+    </section>`
+}
+
 
 
 //-------- CRIAÇÃO DO QUIZZ --------
