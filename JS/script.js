@@ -1,6 +1,6 @@
 // -------- Variáveis Globais --------
 const QUIZZES = "";
-let ID ;
+let ID = "";
 let quizzes = [], quizz = [];
 
 // function changeScreen(screen){
@@ -56,7 +56,7 @@ function getInfo(location){
         promisse.then(function (resposta){
             deuCerto(resposta);
             salvaQuizz(resposta);
-            displayOnScreen();
+            // displayOnScreen();
         });
     }
     
@@ -103,13 +103,18 @@ function displayOnScreen(){
 
 //-------- LÓGICA DO QUIZZ --------
 
-function goToQuizz(elemento){
-    const id = elemento.id;
+function goToQuizz(takeId){
+    const id = takeId.id
     ID = id;
-
     getInfo(ID);
+    
     changeScreen("quizz");
+    console.log (quizz);
+
+
+    
 }
+
 
 //-------- CRIAÇÃO DO QUIZZ --------
 
