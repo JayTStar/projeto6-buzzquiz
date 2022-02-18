@@ -146,7 +146,7 @@ function sendQuizzHTML (resposta) {
 
 //-------- CRIAÇÃO DO QUIZZ --------
 
-let  title,imgURL,questionNum, levelNum;
+let  title,imgURL,questionNum, levelNum, screen = 1; questions = [];
 
 function getValue(screen){
     switch(screen){
@@ -166,7 +166,7 @@ function getValue(screen){
 }
 
 function checkValue(){
-    getValue();
+    getValue("screen-1");
 
     const titleSize = title.length;
     let titleStatus, questionStatus, levelSatus;
@@ -220,7 +220,19 @@ function checkValue(){
     }
 
     if(titleStatus === true && questionStatus === true && levelSatus === true){
-        console.log("tudo ok")
+        console.log("tudo ok");
+        nextScreen();
     }
 }
 
+function nextScreen(){
+    let screens = document.querySelector(`#screen-create #screen-${screen}`);
+
+    screens.classList.add("hidden");
+
+    screen++;
+
+    screens = document.querySelector(`#screen-create #screen-${screen}`);
+
+    screens.classList.remove("hidden");
+}
