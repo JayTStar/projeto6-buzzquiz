@@ -150,7 +150,7 @@ function sendQuizzHTML (resposta) {
 
 //-------- CRIAÇÃO DO QUIZZ --------
 
-let  title,imgURL,questionNum, levelNum, screen = 1; questions = [];
+let  title,imgURL,questionNum, levelNum, screen = 1, questions = [];
 
 function getValue(screen){
     switch(screen){
@@ -239,4 +239,35 @@ function nextScreen(){
     screens = document.querySelector(`#screen-create #screen-${screen}`);
 
     screens.classList.remove("hidden");
+}
+
+function showScreen2(){
+    const local = document.querySelector("#screen-create #screen-2 main");
+    // const structure = `
+    // <h2>Crie suas Perguntas</h2>
+    //         <h2>Pergunta ${i}</h2>
+    //         <ul>
+    //             <input type="text">
+    //             <input type="text">
+    //         </ul>
+    //         <h2>Resposta correta</h2>
+    //         <ul>
+    //             <input type="text">
+    //             <input type="text">
+    //         </ul>
+            
+    //         <ul>
+    //             <input type="text">
+    //             <input type="text">
+    //             <input type="text">
+    //             <input type="text">
+    //             <input type="text">
+    //             <input type="text">
+    //         </ul>`
+
+    for(i=0; i<questionNum; i++){
+        local.innerHTML += `<section onclick = "openQuestion(this)" class="closed"> Pergunta ${i + 1} </section>`
+    }
+
+        
 }
