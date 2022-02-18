@@ -101,8 +101,7 @@ function displayOnScreen(){
     });
 }
 
-//-------- LÓGICA DO QUIZZ ---------
-
+//-------- LÓGICA DO QUIZZ --------
 
 function goToQuizz(elemento){
     const id = elemento.id;
