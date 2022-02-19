@@ -205,7 +205,7 @@ main{
     box-sizing: border-box;
     border-radius: 5px;
 
-    margin: 9px;
+    margin-bottom: 14px;
 }
 #screen-create section{
     margin-top: 24px;
@@ -219,15 +219,12 @@ main{
 }
 
 #screen-create ul{
-    width: auto;
+    width: 100%;
     height: auto;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-
-    padding: 20px;
 }
 
 #screen-create .button{
@@ -247,6 +244,21 @@ main{
 #screen-create .button:hover{
     cursor: pointer;
 }
+#screen-create h2{
+    font-weight: bold;
+    font-size: 23px;
+    line-height: 27px;
+
+    margin: 27px;
+}
+
+#screen-create h3{
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+
+    margin: 14px 16px;
+}
 
 
 /* Tela 1*/
@@ -255,13 +267,7 @@ main{
     width: 100%;
     height: calc(100vh - 70px);
 }
-#screen-1 h2{
-    font-weight: bold;
-    font-size: 23px;
-    line-height: 27px;
 
-    margin: 27px;
-}
 
 /* Tela 2 */
 
@@ -276,6 +282,18 @@ main{
     font-size: 20px;
     font-weight: 700;
     padding: 20px;
+}
+
+#screen-2 .closed:hover{
+    cursor: pointer;
+}
+
+#screen-2 .opened{
+    width: 601px;
+    height: auto;
+
+    display: flex;
+    align-items: flex-start;
 }
 
 .hidden {

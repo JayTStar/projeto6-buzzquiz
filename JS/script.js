@@ -222,6 +222,7 @@ function checkValue(){
     if(titleStatus === true && questionStatus === true && levelSatus === true){
         console.log("tudo ok");
         nextScreen();
+        showQuestionsClosed();
     }
 }
 
@@ -237,33 +238,68 @@ function nextScreen(){
     screens.classList.remove("hidden");
 }
 
-function showScreen2(){
+function showQuestionsClosed(){
     const local = document.querySelector("#screen-create #screen-2 main");
-    // const structure = `
-    // <h2>Crie suas Perguntas</h2>
-    //         <h2>Pergunta ${i}</h2>
-    //         <ul>
-    //             <input type="text">
-    //             <input type="text">
-    //         </ul>
-    //         <h2>Resposta correta</h2>
-    //         <ul>
-    //             <input type="text">
-    //             <input type="text">
-    //         </ul>
-            
-    //         <ul>
-    //             <input type="text">
-    //             <input type="text">
-    //             <input type="text">
-    //             <input type="text">
-    //             <input type="text">
-    //             <input type="text">
-    //         </ul>`
+    
 
     for(i=0; i<questionNum; i++){
-        local.innerHTML += `<section onclick = "openQuestion(this)" class="closed"> Pergunta ${i + 1} </section>`
+        local.innerHTML += ` <section onclick = "toggleQuestion(this)" class="closed"> Pergunta ${i + 1} </section>`
+    }   
+
+    local.innerHTML += `<div class="button"> Prosseguir pra criar níveis </div>`
+}
+
+function openQuestion(question){
+    let i = question.innerText;
+    const structure = `
+    <h3>${i}</h3>
+    <ul>
+        <input type="text">
+        <input type="text">
+    </ul>
+    <h3>Resposta correta</h3>
+    <ul>
+        <input type="text">
+        <input type="text">
+    </ul>
+    <h3>Respostas incorretas</h3>
+    <ul>
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <input type="text">
+        <input type="text">
+    </ul>`
+
+    question.classList.remove("closed");
+    question.classList.add("opened");
+
+    question.innerHTML = structure;
+    
+}
+
+function closeQuestion(question){
+    let i = question.querySelector("h3").innerText;
+
+    question.classList.remove("opened");
+    question.classList.add("closed");
+
+    question.innerHTML = i;
+}
+
+function toggleQuestion(question){
+    const status = question.classList.contains("opened");
+
+    if(status === true){
+        closeQuestion(question);
+    }
+    else{
+        openQuestion(question);
     }
 
-        
+}
+
+function saveQuestions(){
+    
 }
