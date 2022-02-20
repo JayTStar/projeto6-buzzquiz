@@ -243,63 +243,108 @@ function showQuestionsClosed(){
     
 
     for(i=0; i<questionNum; i++){
-        local.innerHTML += ` <section onclick = "toggleQuestion(this)" class="closed"> Pergunta ${i + 1} </section>`
+        local.innerHTML += ` <section class="closed"> <p onclick = "toggleSection(this.parentElement)" >Pergunta ${i + 1}</p>  <ion-icon onclick = "toggleSection(this.parentElement)" name="create-outline"></ion-icon></section>`
     }   
 
     local.innerHTML += `<div class="button"> Prosseguir pra criar níveis </div>`
 }
 
-function openQuestion(question){
-    let i = question.innerText;
+function openSection(section){
+    let i = section.innerText;
     const structure = `
-    <h3>${i}</h3>
+    <h3 onclick = "toggleSection(this.parentElement)" >${i}</h3>
     <ul>
-        <input type="text">
-        <input type="text">
+        <input type="text" id="question-title">
+        <input type="text" id="question-color">
     </ul>
-    <h3>Resposta correta</h3>
-    <ul>
-        <input type="text">
-        <input type="text">
-    </ul>
-    <h3>Respostas incorretas</h3>
-    <ul>
-        <input type="text">
-        <input type="text">
-        <input type="text">
-        <input type="text">
-        <input type="text">
-        <input type="text">
-    </ul>`
+    <div id="answers">
+        <h3>Resposta correta</h3>
+        <ul>
+            <input type="text" class="answer-text">
+            <input type="text" class="answer-image">
+        </ul>
+        <h3>Respostas incorretas</h3>
+        <ul>
+            <input type="text" class="answer-text">
+            <input type="text" class="answer-image">
+            <input type="text" class="answer-text">
+            <input type="text" class="answer-image">
+            <input type="text" class="answer-text">
+            <input type="text" class="answer-image">
+        </ul>
+    </div>`
 
-    question.classList.remove("closed");
-    question.classList.add("opened");
+    section.classList.remove("closed");
+    section.classList.add("opened");
 
-    question.innerHTML = structure;
+    section.innerHTML = structure;
     
 }
 
-function closeQuestion(question){
-    let i = question.querySelector("h3").innerText;
+function closeSection(section){
+    let i = section.querySelector("h3").innerText;
 
-    question.classList.remove("opened");
-    question.classList.add("closed");
+    section.classList.remove("opened");
+    section.classList.add("closed");
 
-    question.innerHTML = i;
+    section.innerHTML = `<p>${i}</p>  <ion-icon onclick = "toggleSection(this.parentElement)" name="create-outline"></ion-icon>`;
 }
 
-function toggleQuestion(question){
-    const status = question.classList.contains("opened");
+function toggleSection(section){
+    const status = section.classList.contains("opened");
 
     if(status === true){
-        closeQuestion(question);
+        closeSection(section);
     }
     else{
-        openQuestion(question);
+        openSection(section);
     }
 
 }
 
 function saveQuestions(){
-    
+    let questionStatus = [];
+
+    const questionsOnScreen = document.querySelectorAll("#screen-2 section");
+    const questionsList = Array.prototype.slice.call(questionsOnScreen);
+
+    console.log(questionsList);
+
+    questionsList.forEach(function(element){
+        const questionTitle = element.querySelector("#question-title").value;
+
+        console.log(questionTitle)
+
+        if(questionTitle.length < 20){
+            alert(`${element.querySelector("h3").innerText} está pequena`);
+            questionStatus.push(false)
+        }
+        else{
+            questionStatus.push(true)
+            questions.push(questionTitle);
+        }
+
+        questions.push(saveAnswers(element));
+    })
+
+    return(questionStatus);
+}
+
+function saveAnswers(element){
+    let answers =[];
+
+    const answersTitleOnScreen = element.getElementsByClassName("answer-text");
+    const answersTitleList = Array.prototype.slice.call(answersTitleOnScreen);
+
+    const answersImageOnScreen = element.getElementsByClassName("answer-image");
+    const answersImageList = Array.prototype.slice.call(answersImageOnScreen);
+
+    answersTitleList.forEach(function (answerElement){
+        const position = answersTitleList.indexOf(answerElement);
+
+        answers.push(answerElement.value)
+        answers.push(answersImageList[position].value);
+    })
+
+    return answers;
 }

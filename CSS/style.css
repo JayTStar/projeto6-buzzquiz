@@ -276,8 +276,9 @@ main{
     height: 74px;
 
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 
     font-size: 20px;
     font-weight: 700;
