@@ -272,7 +272,7 @@ main{
     width: 100%;
 }
 
-#screen-2 #closed{
+#screen-create #closed{
     width: 601px;
     height: 74px;
 
@@ -285,11 +285,7 @@ main{
     font-weight: 700;
 }
 
-#screen-2 :hover{
-    cursor: pointer;
-}
-
-#screen-2 #opened{
+#screen-create #opened{
     width: 601px;
     height: auto;
 

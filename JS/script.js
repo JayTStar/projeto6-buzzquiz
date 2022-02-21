@@ -18,7 +18,6 @@ let quizzes = [], quizz = [];
 getInfo(QUIZZES);
 
 function changeScreen(screen){
-    console.log(screen);
     const home = document.querySelector("#screen-home");
     const quizz = document.querySelector("#screen-quizz");
     const create = document.querySelector("#screen-create");
@@ -66,11 +65,10 @@ function getInfo(location){
         deuErro(erro);
     })
 }
-function postInfo(){
-    
+function postInfo(info){
+    const requisition = axios.post(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes`, info)
 }
 function deuCerto(resposta){
-    console.log("tudo certo");
 }
 function deuErro(erro){
     console.info("deu ruim" + erro.response.status);
@@ -115,7 +113,6 @@ function goToQuizz(takeId){
 
 function sendQuizzHTML (resposta) {
     quizz = resposta.data
-    console.log(quizz)
 
     let main = document.querySelector("#screen-quizz main .title-quizz")
     main.innerHTML += `
@@ -148,8 +145,6 @@ function sendQuizzHTML (resposta) {
 //-------- CRIAÇÃO DO QUIZZ --------
 
 let  quizzTitle,imgURL,questionNum, levelNum, screen = 1, questions = [], levels =[];
-
-const quizzStructure = `{ title: ${quizzTitle} , image: ${imgURL}, questions: ${questions}, levels: ${levels} }`
 
 function showFirstScreen(){
     const localForm = document.querySelector("#screen-1 ul");
@@ -228,7 +223,6 @@ function checkValue(){
     }
 
     if(titleStatus === true && questionStatus === true && levelSatus === true){
-        console.log("tudo ok");
         nextScreen();
         showQuestions();
     }
@@ -260,7 +254,7 @@ function showQuestions(){
                 <div id="answers">
                     <h3>Resposta correta</h3>
                     <ul>
-                        <input type="text" class="answer-text" placeholder="Resposta correta">
+                        <input type="text" class="answer-text correct" placeholder="Resposta correta">
                         <input type="text" class="answer-image" placeholder="URL da Imagem">
                     </ul>
                     <h3>Respostas incorretas</h3>
@@ -297,12 +291,11 @@ function toggleSection(section){
 
 function saveQuestions(){
     questions = [];
-    let title, color, answer;
+    let status = [];
 
     const questionsOnScreen = document.querySelectorAll("#screen-2 section");
     const questionsList = Array.prototype.slice.call(questionsOnScreen);
 
-    console.log(questionsList);
 
     questionsList.forEach(function(element){
 
@@ -317,20 +310,34 @@ function saveQuestions(){
         if(questionTitleSize < 20){
             alert(numQuestion + "deve ter mais de 20 caractéres");
             questions = [];
+            status.push(false);
         }
         else{
             questions.push(questionStructure);
+            status.push(true);
+        }
+        console.log(saveAnswers(element).length);
+        if(saveAnswers(element).length < 2){
+            alert(numQuestion + "Deve ter pelo menos 2 respostas");
+            status.push(false);
         }
 
-        console.log(questionStructure);
     })
 
-    nextScreen();
-    showLevels();
+    const find = status.find(element => element === false);
+
+    if(find === false){
+        alert("Conserte a questão errada");
+    }
+    else{
+        nextScreen();
+        showLevels();
+    }
+    
 }
 
 function saveAnswers(element){
-    let answers = [];
+    let answers = [], status=[];
 
     const answersTitleOnScreen = element.getElementsByClassName("answer-text");
     const answersTitleList = Array.prototype.slice.call(answersTitleOnScreen);
@@ -340,8 +347,28 @@ function saveAnswers(element){
 
     answersTitleList.forEach(function (answerElement){
         const position = answersTitleList.indexOf(answerElement);
+        const isCorrectAnswer = answerElement.classList.contains("correct");
 
-        const answerStructure = `{ text: ${answerElement.value}, image: ${answersImageList[position].value}, isCorrectAnswer: ${false} }`
+        const answerStructure = `{ text: ${answerElement.value}, image: ${answersImageList[position].value}, isCorrectAnswer: ${isCorrectAnswer} }`
+
+        if(isCorrectAnswer === true){
+            if(answerElement.value === ""){
+                alert("Resposta correta não pode estar em branco")
+            }
+            else{
+                status.push(true);
+            }
+        }
+        else{
+            if(answerElement.value != ""){
+                status.push(true);
+            }
+            
+        }
+
+        console.log(status.length);
+
+        console.log(answerStructure);
 
         answers.push(answerStructure);
     })
@@ -357,14 +384,105 @@ function showLevels(){
         local.innerHTML += ` <section> <div id="closed" class=""> <p onclick = "toggleSection(this.parentElement.parentElement)" >Nível ${i + 1}</p> <ion-icon onclick = "toggleSection(this.parentElement.parentElement)" name="create-outline"></ion-icon></div>
             <div id="opened" class="hidden">
                 <ul>
-                    <input type="text" id="question-title" placeholder="Título do nível">
-                    <input type="text" id="question-color" placeholder="% de acerto mínimo">
-                    <input type="text" id="question-title" placeholder="URL da imagem do nível">
-                    <input type="text" id="question-color" placeholder="Descrição do nível">
+                    <input type="text" id="level-title" placeholder="Título do nível">
+                    <input type="text" id="level-value" placeholder="% de acerto mínimo">
+                    <input type="text" id="level-image" placeholder="URL da imagem do nível">
+                    <input type="text" id="level-text" placeholder="Descrição do nível">
                 </ul>
             </div>
         </section>`
     }   
 
-    local.innerHTML += `<div class="button"> Finalizar Quizz </div>`
+    local.innerHTML += `<div onclick="saveLevels()" class="button"> Finalizar Quizz </div>`
+}
+
+function saveLevels(){
+    const levelsOnScreen = document.querySelectorAll("#screen-3 section");
+    const levelList = Array.prototype.slice.call(levelsOnScreen);
+
+    let status = [];
+
+    console.log(levelList)
+    levelList.forEach(function(element){
+        const levelStatus = checkLevels(element);
+
+        if(levelStatus != undefined){
+            status.push(levelStatus);
+        }
+    })
+
+    console.log(status);
+
+    if(status.length === 0){
+        makeQuizz();
+        nextScreen();
+        showFinal();
+    }
+}
+
+function checkLevels(element){
+    const selectedLevel = element.querySelector("p").innerText
+    const title = element.querySelector("#level-title").value
+    const value = element.querySelector("#level-value").value
+    const image = element.querySelector("#level-image").value
+    const text = element.querySelector("#level-text").value
+
+    const levelStructure = `{title: ${title}, image: ${image}, text: ${text}, minValue: ${value}}`
+
+    let status = [];
+
+    if(title.length < 10){
+        alert(`Titulo do nível ${selectedLevel} deve ter pelo menos 10 caractéres`);
+        status.push(false);
+    }
+    else{
+        status.push(true);
+    }
+
+    if(parseInt(value) >= 0 && parseInt(value) <= 100){
+        status.push(true);
+    }
+    else{
+        alert(`O valor do nível ${selectedLevel} deve estar entre 0 e 100`);
+        status.push(false);
+    }
+
+    if(text.length < 30){
+        alert(`Descrição do nível ${selectedLevel} deve ter pelo menos 30 caractéres`);
+        status.push(false);
+    }
+    else{
+        status.push(true);
+    }
+
+    const find = status.find(element => element === false);
+
+    if(find === undefined){
+        levels.push(levelStructure);
+    }
+
+    return find;
+}
+
+function makeQuizz(){
+    const quizzStructure = `{ title: ${quizzTitle} , image: ${imgURL}, questions: ${questions}, levels: ${levels} }`
+    console.log(quizzStructure);
+
+    postInfo(quizzStructure);
+}
+
+function showFinal(){
+    const local = document.querySelector("#screen-4 main")
+
+    local.innerHTML += `<div quizz> <img src="${imgURL}"> <p> ${quizzTitle} </p></div>
+    <div onclick="playQuizz()" class="button"> Acessar quizz </div>
+    <div> <p onclick="changeScreen('home')"> Voltar para home </p> </div>`
+
+    // local.innerHTML += `<div onclick="saveLevels()" class="button"> Finalizar Quizz </div>`
+
+    // local.innerHTML += `<p onclick="changeScreen(home)> Voltar para home </p>`
+}
+
+function playQuizz(){
+    
 }
