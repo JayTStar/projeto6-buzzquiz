@@ -3,6 +3,8 @@ const QUIZZES = "";
 let ID = "";
 let quizzes = [], quizz = [];
 
+meuStorage = localStorage;
+
 // function changeScreen(screen){
 //     const telas = {
 //       home: document.querySelector("#screen-home"),
@@ -56,7 +58,6 @@ function getInfo(location){
         promisse.then(function (resposta){
             deuCerto(resposta);
             salvaQuizz(resposta);
-            // displayOnScreen();
             sendQuizzHTML(resposta);
         });
     }
@@ -85,13 +86,18 @@ function salvaQuizz(resposta){
 // -------- MOSTRAR QUIZZES --------
 
 function display(element){
+    const userquizzes = document.querySelector(".my-quizzes ul");
     const quizzesList = document.querySelector(".all-quizzes ul");
     const titulo = element.title
     const imagem = element.image
     const id = element.id
 
-    quizzesList.innerHTML = quizzesList.innerHTML + `<div id="${id}" onclick="goToQuizz(this)" class="quizz"> <img src="${imagem}" alt="qizz image"> <p>${titulo}</p> </div>`
-    
+    quizzesList.innerHTML = quizzesList.innerHTML + `<div data-identifier="quizz-card" id="${id}" onclick="goToQuizz(this)" class="quizz"> <img src="${imagem}" alt="qizz image"> <p>${titulo}</p> </div>`
+
+
+    if(localStorage.length === 0){
+        userquizzes.innerHTML = `<div data-identifier="create-quizz" class="create-quizz"><p>Você não criou nenhum quizz ainda</p> <div class="create-button" onclick="changeScreen('create')"> Criar quizz</div> </div>`
+    }
 }
 
 function displayOnScreen(){
@@ -267,7 +273,7 @@ function showQuestions(){
     
 
     for(i=0; i<questionNum; i++){
-        local.innerHTML += ` <section> <div id="closed" class=""> <p onclick = "toggleSection(this.parentElement.parentElement)" >Pergunta ${i + 1}</p> <ion-icon onclick = "toggleSection(this.parentElement.parentElement)" name="create-outline"></ion-icon></div>
+        local.innerHTML += ` <section data-identifier="question"> <div id="closed" class=""> <p data-identifier="expand" onclick = "toggleSection(this.parentElement.parentElement)" >Pergunta ${i + 1}</p> <ion-icon data-identifier="expand" onclick = "toggleSection(this.parentElement.parentElement)" name="create-outline"></ion-icon></div>
             <div id="opened" class="hidden">
                 <ul>
                     <input type="text" id="question-title" placeholder="Texto da pergunta">
@@ -325,9 +331,11 @@ function saveQuestions(){
         const questionColor = element.querySelector("#question-color").value;
         const numQuestion = element.querySelector("p").innerText;
 
+        let answer = saveAnswers(element)
+
         const questionTitleSize = questionTitle.length;
 
-        const questionStructure = `{ title: ${questionTitle}, color: ${questionColor}, answers: ${saveAnswers(element)}}`
+        const questionStructure = `{ title: ${questionTitle}, color: ${questionColor}, answers: ${answer}}`
 
         if(questionTitleSize < 20){
             alert(numQuestion + "deve ter mais de 20 caractéres");
@@ -338,8 +346,8 @@ function saveQuestions(){
             questions.push(questionStructure);
             status.push(true);
         }
-        console.log(saveAnswers(element).length);
-        if(saveAnswers(element).length < 2){
+        console.log(answer.length);
+        if(answer.length < 2){
             alert(numQuestion + "Deve ter pelo menos 2 respostas");
             status.push(false);
         }
@@ -403,7 +411,7 @@ function showLevels(){
     
 
     for(i=0; i<levelNum; i++){
-        local.innerHTML += ` <section> <div id="closed" class=""> <p onclick = "toggleSection(this.parentElement.parentElement)" >Nível ${i + 1}</p> <ion-icon onclick = "toggleSection(this.parentElement.parentElement)" name="create-outline"></ion-icon></div>
+        local.innerHTML += ` <section data-identifier="level"> <div id="closed" class=""> <p data-identifier="expand" onclick = "toggleSection(this.parentElement.parentElement)" >Nível ${i + 1}</p> <ion-icon data-identifier="expand" onclick = "toggleSection(this.parentElement.parentElement)" name="create-outline"></ion-icon></div>
             <div id="opened" class="hidden">
                 <ul>
                     <input type="text" id="level-title" placeholder="Título do nível">
@@ -499,10 +507,6 @@ function showFinal(){
     local.innerHTML += `<div quizz> <img src="${imgURL}"> <p> ${quizzTitle} </p></div>
     <div onclick="playQuizz()" class="button"> Acessar quizz </div>
     <div> <p onclick="changeScreen('home')"> Voltar para home </p> </div>`
-
-    // local.innerHTML += `<div onclick="saveLevels()" class="button"> Finalizar Quizz </div>`
-
-    // local.innerHTML += `<p onclick="changeScreen(home)> Voltar para home </p>`
 }
 
 function playQuizz(){
