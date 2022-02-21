@@ -145,13 +145,23 @@ main{
     margin-bottom: 28px;
 }
 
-#screen-quizz article h3 {
+.h3-question {
     width: 340px;
+    height: 90px;
+    word-break:normal;
+    word-wrap: break-word;
+}
+
+#screen-quizz article h3 {
+    
     background: #434CA0;
     padding: 20px;
     display: flex;
     align-items: center;
+    justify-content: center;
     margin-bottom: 13px;
+    word-break:normal;
+    word-wrap: break-word;
 }
 
 .answers-options {
