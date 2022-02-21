@@ -129,43 +129,46 @@ function sendQuizzHTML (resposta) {
         arrayQuestions.sort(arraySort);
         
         screenQuestions.innerHTML +=`
-            <article>
+            <article${i} class="article">
                 <div class="h3-question">
                     <h3 style="background: ${questions[i].color};">${questions[i].title}</h3>
+                </div>   
+                <div class="answers-options">
                 </div>
-                
             </article>`
         
         
         for (let j = 0; j < questions[i].answers.length; j++) {
              
 
-            let screenAnswers = document.querySelector("article");
+            let screenAnswers = document.querySelector(`article${i} .answers-options`);
             screenAnswers.innerHTML += `
-            <div class="answers-options">
-                
-                <div>
+            
+                <div id ="${questions[i].answers[j].isCorrectAnswer}" onclick="correctAnswers(this)">
                     <img src="${arrayQuestions[j].image}">
                     <p>${arrayQuestions[j].text}</p>
                 </div>
-            </div>`
-        }
-    }
+           `
+            let idTrueOrFalse = document.querySelector(`article${i} .answers-options #id`)
+            if (idTrueOrFalse == false) {
 
-    // const answers = quizz.questions
-    // for (let j = 0; j < answers.length; j++) {
-    //     let screenAnswers = document.querySelector(`#screen-quizz main .${j} .${j}`);
-    //     screenAnswers.innerHTML +=`
-    //             <div>
-    //                 <img src="${answers[j].answers.image}" alt="">
-    //                 <p>${answers[j].answers.title}</p>
-    //             </div>`
-    // }
+            }
+            console.log(questions[i].answers[j].isCorrectAnswer)
+        }
+        console.log(arrayQuestions)
+        
+    }
 
 }
 function arraySort(){
     return Math.random()-0.5;
 }
+
+/*function correctAnswers(answersSelected) {
+
+    document.querySelector("")
+    quizz.questions.
+}*/
 //-------- CRIAÇÃO DO QUIZZ --------
 
 let  quizzTitle,imgURL,questionNum, levelNum, screen = 1, questions = [], levels =[];
