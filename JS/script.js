@@ -113,23 +113,42 @@ function goToQuizz(takeId){
 }
 
 function sendQuizzHTML (resposta) {
-    quizz = resposta.data
-    console.log(quizz)
+    const questions = quizz.questions;
+    quizz = resposta.data;
+    console.log(quizz);
 
     let main = document.querySelector("#screen-quizz main .title-quizz")
     main.innerHTML += `
         <img src="${quizz.image}" alt="">
         <h2>${quizz.title}</h2>`
 
-    const questions = quizz.questions
     for (let i = 0; i < questions.length; i++) {
         let screenQuestions = document.querySelector("#screen-quizz main .questions");
+        let arrayQuestions = questions[i].answers
+        arrayQuestions.sort(arraySort);
+        
         screenQuestions.innerHTML +=`
-            <article class="box ${i}">
-                <h3 style="background: ${questions[i].color};">${questions[i].title}</h3>
-                <div class="answers-options ${i}">
+            <article>
+                <div class="h3-question">
+                    <h3 style="background: ${questions[i].color};">${questions[i].title}</h3>
                 </div>
+                
             </article>`
+        
+        
+        for (let j = 0; j < questions[i].answers.length; j++) {
+             
+
+            let screenAnswers = document.querySelector("article");
+            screenAnswers.innerHTML += `
+            <div class="answers-options">
+                
+                <div>
+                    <img src="${arrayQuestions[j].image}">
+                    <p>${arrayQuestions[j].text}</p>
+                </div>
+            </div>`
+        }
     }
 
     // const answers = quizz.questions
@@ -143,7 +162,9 @@ function sendQuizzHTML (resposta) {
     // }
 
 }
-
+function arraySort(){
+    return Math.random()-0.5;
+}
 //-------- CRIAÇÃO DO QUIZZ --------
 
 let  title,imgURL,questionNum, levelNum, screen = 1, questions = [];
