@@ -209,10 +209,7 @@ main{
 }
 #screen-create section{
     margin-top: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding: 20px;
 
     background: #FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
@@ -271,7 +268,11 @@ main{
 
 /* Tela 2 */
 
-#screen-2 .closed{
+#screen-2 div{
+    width: 100%;
+}
+
+#screen-2 #closed{
     width: 601px;
     height: 74px;
 
@@ -282,19 +283,18 @@ main{
 
     font-size: 20px;
     font-weight: 700;
-    padding: 20px;
 }
 
-#screen-2 .closed:hover{
+#screen-2 :hover{
     cursor: pointer;
 }
 
-#screen-2 .opened{
+#screen-2 #opened{
     width: 601px;
     height: auto;
 
-    display: flex;
-    align-items: flex-start;
+    /* display: flex;
+    align-items: flex-start; */
 }
 
 .hidden {

@@ -38,6 +38,7 @@ function changeScreen(screen){
 
         case "create":
             create.classList.remove("hidden");
+            showFirstScreen();
             break;
     }
 }
@@ -146,29 +147,36 @@ function sendQuizzHTML (resposta) {
 
 //-------- CRIAÇÃO DO QUIZZ --------
 
-let  title,imgURL,questionNum, levelNum, screen = 1, questions = [];
+let  quizzTitle,imgURL,questionNum, levelNum, screen = 1, questions = [], levels =[];
 
-function getValue(screen){
-    switch(screen){
-        case "screen-1":
-            title = document.querySelector("#screen-1 #titulo").value;
-            imgURL = document.querySelector("#screen-1 #imagem").value;
-            questionNum = parseInt(document.querySelector("#screen-1 #qtd-perguntas").value);
-            levelNum = parseInt(document.querySelector("#screen-1 #qtd-niveis").value);
-            break;
+const quizzStructure = `{ title: ${quizzTitle} , image: ${imgURL}, questions: ${questions}, levels: ${levels} }`
 
-        case "screen-2":
+function showFirstScreen(){
+    const localForm = document.querySelector("#screen-1 ul");
+    const localButton = document.querySelector("#screen-1 main");
 
-        case "screen-3":
+    const screenStructure = `
+    <input type="text" id="titulo" placeholder="Título do seu quizz">
+    <input type="text" id="imagem" placeholder="URL da imagem do seu quizz">
+    <input type="text" id="qtd-perguntas" placeholder="Quantidade de perguntas do quizz">
+    <input type="text" id="qtd-niveis" placeholder="Quantidade de níveis do quizz">`
 
-    }
-    
+    localForm.innerHTML = screenStructure;
+
+    localButton.innerHTML += '<div onclick="checkValue()" class="button">Prosseguir pra criar perguntas</div>'
+}
+
+function saveQuizzInfo(){
+    quizzTitle = document.querySelector("#screen-1 #titulo").value;
+    imgURL = document.querySelector("#screen-1 #imagem").value;
+    questionNum = parseInt(document.querySelector("#screen-1 #qtd-perguntas").value);
+    levelNum = parseInt(document.querySelector("#screen-1 #qtd-niveis").value);
 }
 
 function checkValue(){
-    getValue("screen-1");
+    saveQuizzInfo();
 
-    const titleSize = title.length;
+    const titleSize = quizzTitle.length;
     let titleStatus, questionStatus, levelSatus;
 
     if(titleSize >= 20 && titleSize <= 65){
@@ -222,7 +230,7 @@ function checkValue(){
     if(titleStatus === true && questionStatus === true && levelSatus === true){
         console.log("tudo ok");
         nextScreen();
-        showQuestionsClosed();
+        showQuestions();
     }
 }
 
@@ -238,72 +246,58 @@ function nextScreen(){
     screens.classList.remove("hidden");
 }
 
-function showQuestionsClosed(){
+function showQuestions(){
     const local = document.querySelector("#screen-create #screen-2 main");
     
 
     for(i=0; i<questionNum; i++){
-        local.innerHTML += ` <section class="closed"> <p onclick = "toggleSection(this.parentElement)" >Pergunta ${i + 1}</p>  <ion-icon onclick = "toggleSection(this.parentElement)" name="create-outline"></ion-icon></section>`
+        local.innerHTML += ` <section> <div id="closed" class=""> <p onclick = "toggleSection(this.parentElement.parentElement)" >Pergunta ${i + 1}</p> <ion-icon onclick = "toggleSection(this.parentElement.parentElement)" name="create-outline"></ion-icon></div>
+            <div id="opened" class="hidden">
+                <ul>
+                    <input type="text" id="question-title" placeholder="Texto da pergunta">
+                    <input type="text" id="question-color" placeholder="Cor de fundo da pergunta">
+                </ul>
+                <div id="answers">
+                    <h3>Resposta correta</h3>
+                    <ul>
+                        <input type="text" class="answer-text" placeholder="Resposta correta">
+                        <input type="text" class="answer-image" placeholder="URL da Imagem">
+                    </ul>
+                    <h3>Respostas incorretas</h3>
+                    <ul>
+                        <input type="text" class="answer-text" placeholder="Resposta Incorreta 1">
+                        <input type="text" class="answer-image" placeholder="URL da Imagem 1">
+                        <input type="text" class="answer-text" placeholder="Resposta Incorreta 2">
+                        <input type="text" class="answer-image" placeholder="URL da Imagem 2">
+                        <input type="text" class="answer-text" placeholder="Resposta Incorreta 3">
+                        <input type="text" class="answer-image" placeholder="URL da Imagem 3">
+                    </ul>
+                </div>
+            </div>
+        </section>`
     }   
 
-    local.innerHTML += `<div class="button"> Prosseguir pra criar níveis </div>`
-}
-
-function openSection(section){
-    let i = section.innerText;
-    const structure = `
-    <h3 onclick = "toggleSection(this.parentElement)" >${i}</h3>
-    <ul>
-        <input type="text" id="question-title">
-        <input type="text" id="question-color">
-    </ul>
-    <div id="answers">
-        <h3>Resposta correta</h3>
-        <ul>
-            <input type="text" class="answer-text">
-            <input type="text" class="answer-image">
-        </ul>
-        <h3>Respostas incorretas</h3>
-        <ul>
-            <input type="text" class="answer-text">
-            <input type="text" class="answer-image">
-            <input type="text" class="answer-text">
-            <input type="text" class="answer-image">
-            <input type="text" class="answer-text">
-            <input type="text" class="answer-image">
-        </ul>
-    </div>`
-
-    section.classList.remove("closed");
-    section.classList.add("opened");
-
-    section.innerHTML = structure;
-    
-}
-
-function closeSection(section){
-    let i = section.querySelector("h3").innerText;
-
-    section.classList.remove("opened");
-    section.classList.add("closed");
-
-    section.innerHTML = `<p>${i}</p>  <ion-icon onclick = "toggleSection(this.parentElement)" name="create-outline"></ion-icon>`;
+    local.innerHTML += `<div onclick="saveQuestions()" class="button"> Prosseguir pra criar níveis </div>`
 }
 
 function toggleSection(section){
-    const status = section.classList.contains("opened");
+    const openedDiv = section.querySelector("#opened");
+    const closedDiv = section.querySelector("#closed");
+    const status = openedDiv.classList.contains("hidden");
 
     if(status === true){
-        closeSection(section);
+        openedDiv.classList.remove("hidden");
+        closedDiv.classList.add("hidden");
     }
     else{
-        openSection(section);
+        openedDiv.classList.add("hidden");
+        closedDiv.classList.remove("hidden");
     }
-
 }
 
 function saveQuestions(){
-    let questionStatus = [];
+    questions = [];
+    let title, color, answer;
 
     const questionsOnScreen = document.querySelectorAll("#screen-2 section");
     const questionsList = Array.prototype.slice.call(questionsOnScreen);
@@ -311,27 +305,32 @@ function saveQuestions(){
     console.log(questionsList);
 
     questionsList.forEach(function(element){
+
         const questionTitle = element.querySelector("#question-title").value;
+        const questionColor = element.querySelector("#question-color").value;
+        const numQuestion = element.querySelector("p").innerText;
 
-        console.log(questionTitle)
+        const questionTitleSize = questionTitle.length;
 
-        if(questionTitle.length < 20){
-            alert(`${element.querySelector("h3").innerText} está pequena`);
-            questionStatus.push(false)
+        const questionStructure = `{ title: ${questionTitle}, color: ${questionColor}, answers: ${saveAnswers(element)}}`
+
+        if(questionTitleSize < 20){
+            alert(numQuestion + "deve ter mais de 20 caractéres");
+            questions = [];
         }
         else{
-            questionStatus.push(true)
-            questions.push(questionTitle);
+            questions.push(questionStructure);
         }
 
-        questions.push(saveAnswers(element));
+        console.log(questionStructure);
     })
 
-    return(questionStatus);
+    nextScreen();
+    showLevels();
 }
 
 function saveAnswers(element){
-    let answers =[];
+    let answers = [];
 
     const answersTitleOnScreen = element.getElementsByClassName("answer-text");
     const answersTitleList = Array.prototype.slice.call(answersTitleOnScreen);
@@ -342,9 +341,30 @@ function saveAnswers(element){
     answersTitleList.forEach(function (answerElement){
         const position = answersTitleList.indexOf(answerElement);
 
-        answers.push(answerElement.value)
-        answers.push(answersImageList[position].value);
+        const answerStructure = `{ text: ${answerElement.value}, image: ${answersImageList[position].value}, isCorrectAnswer: ${false} }`
+
+        answers.push(answerStructure);
     })
 
     return answers;
+}
+
+function showLevels(){
+    const local = document.querySelector("#screen-create #screen-3 main");
+    
+
+    for(i=0; i<levelNum; i++){
+        local.innerHTML += ` <section> <div id="closed" class=""> <p onclick = "toggleSection(this.parentElement.parentElement)" >Nível ${i + 1}</p> <ion-icon onclick = "toggleSection(this.parentElement.parentElement)" name="create-outline"></ion-icon></div>
+            <div id="opened" class="hidden">
+                <ul>
+                    <input type="text" id="question-title" placeholder="Título do nível">
+                    <input type="text" id="question-color" placeholder="% de acerto mínimo">
+                    <input type="text" id="question-title" placeholder="URL da imagem do nível">
+                    <input type="text" id="question-color" placeholder="Descrição do nível">
+                </ul>
+            </div>
+        </section>`
+    }   
+
+    local.innerHTML += `<div class="button"> Finalizar Quizz </div>`
 }
