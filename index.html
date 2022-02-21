@@ -15,14 +15,13 @@
             <div id="screen-home" class="">
                 <main>
                     <section class="my-quizzes">
-                        <div id="no-quizzes" onclick="changeScreen('create')" class="quizz"></div>
-                        <ul id="user-quizes">
+                        <ul data-identifier="user-quizzes" id="user-quizes">
 
                         </ul>
                     </section>
                     <section class="all-quizzes">
                         <h2>Todos os Quizzes</h2>
-                        <ul>
+                        <ul data-identifier="general-quizzes">
 
                         </ul>
                     </section>
@@ -62,8 +61,11 @@
                         <h2>Agora, decida os níveis</h2>
                     </main>
                 </div>
-                <div id="screen-4">
+                <div id="screen-4" class="hidden">
+                    <main>
+                        <h2>Seu quizz está pronto</h2>
 
+                    </main>
                 </div>
             </div>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
